@@ -4,6 +4,10 @@ from boggle import Boggle
 
 app = Flask(__name__)
 
+# for testing NOT developing
+app.config['TESTING'] = True
+app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
+
 app.config['SECRET_KEY'] = '12345'
 debug = DebugToolbarExtension(app)
 
@@ -39,7 +43,7 @@ def check_guess_validity(guess):
 def submit_guess():
     """ Receives a guess and checks its validity, then responds with a msg """
 
-    guess = request.json.get('guess', ' ')
+    guess = request.get_json().get('guess', ' ')
     msg = check_guess_validity(guess)
     response = { "result": msg }
     return jsonify(response)
@@ -54,13 +58,13 @@ def update_user_stats(score):
         if score > session['high_score']:
             session['high_score'] = score
     else:
-        session['high_score'] = 0
+        session['high_score'] = score
 
 @app.route('/endgame', methods=['POST'])
 def get_user_stats():
     """ Receives the user's score at the end of the game, updates high_score & played_games, then sends it back """
 
-    score = request.json.get('score')
+    score = request.get_json().get('score')
     update_user_stats(score)
     response = { "high_score": session['high_score'], "played": session['played'] }
     return jsonify(response)
