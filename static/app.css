@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+}
+
+#boggle-board {
+    font-size: 4rem;
+}
+
+.letter {
+    border: 1px solid black;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+}
+
+#guess-form {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: x-large;
+    text-align: center;
+}
+
+#timer {
+    color: red;
+}
+
+.hidden {
+    display: none;
+}
